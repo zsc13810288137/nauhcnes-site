@@ -10,6 +10,7 @@ const projects = [
     icon: '🛒',
     tags: ['Next.js', 'Supabase', 'Vercel'],
     status: 'live' as const,
+    color: '#22d3ee',
   },
   {
     title: 'Project Management',
@@ -18,6 +19,7 @@ const projects = [
     icon: '📋',
     tags: ['React', 'Supabase', 'Render'],
     status: 'live' as const,
+    color: '#a78bfa',
   },
   {
     title: '34d Versicherung',
@@ -26,6 +28,7 @@ const projects = [
     icon: '📖',
     tags: ['HTML', 'JavaScript', 'Interactive'],
     status: 'live' as const,
+    color: '#34d399',
   },
   {
     title: 'HTB Writeups',
@@ -34,6 +37,7 @@ const projects = [
     icon: '🔐',
     tags: ['HTML', 'Cybersecurity', 'Pentesting'],
     status: 'live' as const,
+    color: '#4ade80',
   },
   {
     title: 'CAE Simulation',
@@ -42,55 +46,251 @@ const projects = [
     icon: '🔬',
     tags: ['Astro', 'Three.js', '3D'],
     status: 'planned' as const,
+    color: '#f97316',
   },
+];
+
+const links = [
+  { label: 'GitHub', url: 'https://github.com/zsc13810288137', icon: '⌘' },
+  { label: 'HackTheBox', url: 'https://app.hackthebox.com/', icon: '◈' },
+  { label: 'Email', url: 'mailto:zsc13810288137@gmail.com', icon: '✉' },
 ];
 ---
 <BaseLayout>
+  <div class="noise"></div>
+
   <main>
+    <!-- Hero -->
     <section class="hero">
-      <p class="greeting">Hi, I'm</p>
-      <h1>Senchuan</h1>
-      <p class="subtitle">Engineer · Builder · Lifelong Learner</p>
+      <div class="hero-badge">
+        <span class="dot"></span> Available for work
+      </div>
+      <h1>
+        <span class="line1">Hi, I'm <span class="name">Senchuan</span></span>
+      </h1>
+      <div class="roles">
+        <span class="role-static">I build</span>
+        <span class="role-cycle" id="roleCycle">web platforms</span>
+      </div>
       <p class="bio">
-        Mechanical engineer turned full-stack developer. I build things that work —
-        from CAE simulations to web platforms.
+        Mechanical engineer turned full-stack developer and security researcher.
+        From CAE simulations to web platforms to penetration testing —
+        I build things that work and break things that shouldn't.
       </p>
+      <div class="hero-links">
+        {links.map(l => (
+          <a href={l.url} target="_blank" rel="noopener" class="hero-link">
+            <span class="hero-link-icon">{l.icon}</span> {l.label}
+          </a>
+        ))}
+      </div>
     </section>
 
+    <!-- Projects -->
     <section class="projects">
-      <h2>Projects</h2>
+      <div class="section-header">
+        <h2>Projects</h2>
+        <span class="section-line"></span>
+      </div>
       <div class="grid">
         {projects.map(p => <ProjectCard {...p} />)}
       </div>
     </section>
 
+    <!-- Footer -->
     <footer>
-      <p>&copy; {new Date().getFullYear()} Senchuan · Built with <a href="https://astro.build">Astro</a></p>
+      <div class="footer-inner">
+        <p>&copy; {new Date().getFullYear()} Senchuan</p>
+        <p class="footer-sub">Built with <a href="https://astro.build">Astro</a> · Deployed on <a href="https://vercel.com">Vercel</a></p>
+      </div>
     </footer>
   </main>
+
+  <script>
+    const roles = ['web platforms', 'security tools', 'e-commerce apps', 'CAE simulations', 'open-source projects'];
+    let i = 0;
+    const el = document.getElementById('roleCycle');
+    if (el) {
+      setInterval(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(8px)';
+        setTimeout(() => {
+          i = (i + 1) % roles.length;
+          el.textContent = roles[i];
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        }, 300);
+      }, 2500);
+    }
+  </script>
 </BaseLayout>
 
 <style>
+  /* Noise overlay */
+  .noise {
+    position: fixed;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px;
+  }
+
   main {
-    max-width: 800px;
+    position: relative;
+    z-index: 1;
+    max-width: 880px;
     margin: 0 auto;
     padding: 2rem 1.5rem;
   }
+
+  /* Hero */
   .hero {
-    padding: 4rem 0 3rem;
+    padding: 6rem 0 4rem;
     text-align: center;
   }
-  .greeting { color: var(--accent); font-size: 1rem; margin-bottom: 0.25rem; }
-  h1 { font-size: 3rem; font-weight: 700; margin-bottom: 0.5rem; }
-  .subtitle { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1rem; }
-  .bio { max-width: 500px; margin: 0 auto; color: var(--text-muted); font-size: 0.95rem; }
-  .projects { padding: 2rem 0; }
-  h2 { font-size: 1.5rem; margin-bottom: 1.5rem; }
-  .grid { display: flex; flex-direction: column; gap: 1rem; }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    background: rgba(34, 211, 238, 0.08);
+    border: 1px solid rgba(34, 211, 238, 0.15);
+    font-size: 0.8rem;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    font-family: var(--font-mono);
+  }
+  .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--accent-3);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    margin-bottom: 1rem;
+  }
+  .name {
+    background: linear-gradient(135deg, var(--accent), var(--accent-2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .roles {
+    font-size: 1.35rem;
+    color: var(--text-muted);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+  }
+  .role-cycle {
+    color: var(--accent);
+    font-weight: 600;
+    transition: opacity 0.3s, transform 0.3s;
+    display: inline-block;
+    min-width: 200px;
+    text-align: left;
+  }
+
+  .bio {
+    max-width: 540px;
+    margin: 0 auto 2rem;
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+
+  .hero-links {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+  }
+  .hero-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.5rem 1.25rem;
+    border-radius: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 0.9rem;
+    transition: all 0.25s;
+  }
+  .hero-link:hover {
+    border-color: var(--border-hover);
+    background: var(--bg-card-hover);
+    color: var(--accent);
+    transform: translateY(-2px);
+    box-shadow: var(--glow);
+  }
+  .hero-link-icon { font-size: 1rem; }
+
+  /* Projects */
+  .projects { padding: 2rem 0 3rem; }
+
+  .section-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 2rem;
+  }
+  h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    white-space: nowrap;
+  }
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+
+  /* Footer */
   footer {
     text-align: center;
-    padding: 3rem 0 1rem;
+    padding: 3rem 0 2rem;
+    border-top: 1px solid var(--border);
+  }
+  .footer-inner p {
     color: var(--text-muted);
     font-size: 0.85rem;
+  }
+  .footer-sub {
+    margin-top: 0.25rem;
+    font-size: 0.8rem !important;
+  }
+
+  /* Responsive */
+  @media (max-width: 640px) {
+    .hero { padding: 4rem 0 3rem; }
+    h1 { font-size: 2.4rem; }
+    .roles { font-size: 1.1rem; flex-direction: column; gap: 0; }
+    .role-cycle { text-align: center; min-width: auto; }
+    .grid { grid-template-columns: 1fr; }
   }
 </style>
