@@ -1,0 +1,96 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+
+const projects = [
+  {
+    title: 'Qi-Kleinod',
+    description: 'Full-stack e-commerce platform — product catalog, shopping cart, checkout, and admin dashboard.',
+    url: 'https://qi-kleinod.com',
+    icon: '🛒',
+    tags: ['Next.js', 'Supabase', 'Vercel'],
+    status: 'live' as const,
+  },
+  {
+    title: 'Project Management',
+    description: 'Team project management tool with task boards, timelines, and collaboration features.',
+    url: 'https://pm.qi-kleinod.com',
+    icon: '📋',
+    tags: ['React', 'Supabase', 'Render'],
+    status: 'live' as const,
+  },
+  {
+    title: '34d Versicherung',
+    description: '34d insurance exam study notes (DE/CN bilingual) and interactive self-assessment quizzes.',
+    url: 'https://34d.qi-kleinod.com',
+    icon: '📖',
+    tags: ['Astro', 'MDX', 'Interactive'],
+    status: 'planned' as const,
+  },
+  {
+    title: 'CAE Simulation',
+    description: 'Portfolio of automotive stiffness, crash dynamics, and CFD simulation projects with 3D visualization.',
+    url: 'https://sim.qi-kleinod.com',
+    icon: '🔬',
+    tags: ['Astro', 'Three.js', '3D'],
+    status: 'planned' as const,
+  },
+  {
+    title: 'Cybersecurity Notes',
+    description: 'HTB writeups, penetration testing notes, and security research documentation.',
+    url: 'https://sec.qi-kleinod.com',
+    icon: '🔐',
+    tags: ['Astro', 'MDX', 'Markdown'],
+    status: 'planned' as const,
+  },
+];
+---
+<BaseLayout>
+  <main>
+    <section class="hero">
+      <p class="greeting">Hi, I'm</p>
+      <h1>Senchuan</h1>
+      <p class="subtitle">Engineer · Builder · Lifelong Learner</p>
+      <p class="bio">
+        Mechanical engineer turned full-stack developer. I build things that work —
+        from CAE simulations to web platforms.
+      </p>
+    </section>
+
+    <section class="projects">
+      <h2>Projects</h2>
+      <div class="grid">
+        {projects.map(p => <ProjectCard {...p} />)}
+      </div>
+    </section>
+
+    <footer>
+      <p>&copy; {new Date().getFullYear()} Senchuan · Built with <a href="https://astro.build">Astro</a></p>
+    </footer>
+  </main>
+</BaseLayout>
+
+<style>
+  main {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 2rem 1.5rem;
+  }
+  .hero {
+    padding: 4rem 0 3rem;
+    text-align: center;
+  }
+  .greeting { color: var(--accent); font-size: 1rem; margin-bottom: 0.25rem; }
+  h1 { font-size: 3rem; font-weight: 700; margin-bottom: 0.5rem; }
+  .subtitle { color: var(--text-muted); font-size: 1.1rem; margin-bottom: 1rem; }
+  .bio { max-width: 500px; margin: 0 auto; color: var(--text-muted); font-size: 0.95rem; }
+  .projects { padding: 2rem 0; }
+  h2 { font-size: 1.5rem; margin-bottom: 1.5rem; }
+  .grid { display: flex; flex-direction: column; gap: 1rem; }
+  footer {
+    text-align: center;
+    padding: 3rem 0 1rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+</style>
